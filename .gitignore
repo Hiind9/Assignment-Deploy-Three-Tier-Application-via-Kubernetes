@@ -39,3 +39,8 @@ docker-compose.override.yml
 # Local development
 **/local/
 **/tmp/
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl

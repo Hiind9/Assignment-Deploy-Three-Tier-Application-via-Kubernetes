@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+ name: backend-ingress
+ namespace: assignment-portal
+ annotations:
+   nginx.ingress.kubernetes.io/rewrite-target: /$2
+   nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+ ingressClassName: nginx
+ rules:
+ - http:
+     paths:
+     - path: /backend(/|$)(.*)
+       pathType: ImplementationSpecific
+       backend:
+         service:
+           name: backend-clusterip-service
+           port:
+             number: 80

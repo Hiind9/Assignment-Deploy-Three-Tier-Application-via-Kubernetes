@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: frontend-configmap
+ namespace: assignment-portal
+data:
+ config.json: |
+   {
+     "API_URL": "http://57.158.80.164/backend/"
+   }
+

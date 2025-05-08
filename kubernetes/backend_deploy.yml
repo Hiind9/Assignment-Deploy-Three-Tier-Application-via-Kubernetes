@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deploy
+  labels:
+    app: backend-app
+  namespace: assignment-portal
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      name: backend-app
+      labels:
+        app: backend-app
+    spec:
+      containers:
+        - name: backend-app
+          image: hiind9/backend-portal:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DB_HOST
+              value: "devops2-hind-sqlserver.database.windows.net" # Replace with your SQL server FQDN
+            - name: DB_PORT
+              value: "1433"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: sql-secrets
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sql-secrets
+                  key: password
+            - name: DB_NAME
+              value: "devops2-hind-sqldb" # Replace with your SQL database name

@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+ name: frontend-ingress
+ namespace: assignment-portal
+spec:
+ ingressClassName: nginx
+ rules:
+ - http:
+     paths:
+     - path: /(.*)
+       pathType: ImplementationSpecific
+       backend:
+         service:
+           name: frontend-clusterip-service
+           port:
+             number: 80

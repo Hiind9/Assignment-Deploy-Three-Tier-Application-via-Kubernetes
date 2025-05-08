@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: frontend-deploy
+ labels:
+   app: frontend-app
+ namespace: assignment-portal
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: frontend-app
+ template:
+   metadata:
+     name: frontend-app
+     labels:
+       app: frontend-app
+   spec:
+     volumes:
+       - name: config
+         configMap:
+           name: frontend-configmap
+           items:
+             - key: config.json
+               path: config.json
+     containers:
+       - name: frontend-app
+         image: hiind9/frontend-assignment:latest
+         ports:
+           - containerPort: 80
+         volumeMounts:
+           - name: config
+             mountPath: /usr/share/nginx/html/config.json
+             subPath: config.json
+             readOnly: true
